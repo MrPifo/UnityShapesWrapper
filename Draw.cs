@@ -1,4 +1,4 @@
-﻿using Shapes;
+using Shapes;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -15,14 +15,33 @@ namespace Sperlich.Debug.Draw {
 		static Queue<DrawDisc> Discs { get; set; } = new Queue<DrawDisc>();
 		static Queue<DrawRing> Rings { get; set; } = new Queue<DrawRing>();
 		static Queue<DrawText> Texts { get; set; } = new Queue<DrawText>();
+		static Queue<DrawSphere> Spheres { get; set; } = new Queue<DrawSphere>();
+		static Queue<DrawCube> Cubes { get; set; } = new Queue<DrawCube>();
+
+		void Start() {
+			instance = FindObjectOfType<Draw>();
+		}
 
 #if UNITY_EDITOR
+		void Awake() {
+			if(!Application.isPlaying) {
+				ScriptReload();
+			}
+		}
 		[DidReloadScripts]
 		public static void ScriptReload() {
-			if(Instance == null && !FindObjectOfType<Draw>()) {
-				instance = new GameObject("ShapesDrawer").AddComponent<Draw>();
-			} else {
-				instance = FindObjectOfType<Draw>();
+			if(!Application.isPlaying) {
+				var list = FindObjectsOfType<Draw>();
+				if(list.Length > 1) {
+					for(int i = 1; i < list.Length; i++) {
+						DestroyImmediate(list[i].gameObject);
+					}
+				}
+				if(Instance == null && !FindObjectOfType<Draw>()) {
+					instance = new GameObject("ShapesDrawer").AddComponent<Draw>();
+				} else {
+					instance = FindObjectOfType<Draw>();
+				}
 			}
 		}
 #endif
@@ -92,6 +111,27 @@ namespace Sperlich.Debug.Draw {
 
 					Shapes.Draw.Text(t.pos, t.normal, t.text, TextAlign.Center, t.fontSize, t.color);
 				}
+				while(Spheres.Count > 0) {
+					var s = Spheres.Dequeue();
+					Shapes.Draw.ResetAllDrawStates();
+					SetZTest(s.zTest);
+
+					Shapes.Draw.Sphere(s.pos, s.radius, s.color);
+				}
+				while(Cubes.Count > 0) {
+					var c = Cubes.Dequeue();
+					Shapes.Draw.ResetAllDrawStates();
+					SetZTest(c.zTest);
+
+					if(IsTransparent(c.color)) {
+						Shapes.Draw.BlendMode = ShapesBlendMode.Transparent;
+					} else {
+						Shapes.Draw.BlendMode = ShapesBlendMode.Opaque;
+					}
+
+
+					Shapes.Draw.Cuboid(c.pos, c.normal, c.size, c.color);
+				}
 			}
 		}
 
@@ -99,6 +139,7 @@ namespace Sperlich.Debug.Draw {
 		public static void Line(Vector3 start, Vector3 end, Color32 color, bool zTest = false) => Line(start, end, 2f, color, zTest);
 		public static void Line(Vector3 start, Vector3 end, float thickness, bool zTest = true) => Line(start, end, thickness, Color.white, zTest);
 		public static void Line(Vector3 start, Vector3 end, float thickness, Color32 color, bool zTest = true) => Line(start, end, thickness, color, color, zTest);
+		public static void Line(Vector3 start, Vector3 end, float thickness, Color32 color, LineGeometry geometry, bool zTest = false) => Line(start, end, thickness, color, color, LineEndCap.Round, geometry, zTest);
 		public static void Line(Vector3 start, Vector3 end, float thickness, Color32 startColor, Color32 endColor, bool zTest = true) => Line(start, end, thickness, startColor, endColor, LineEndCap.Round, zTest);
 		public static void Line(Vector3 start, Vector3 end, float thickness, Color32 startColor, Color32 endColor, LineEndCap endCaps, bool zTest = true) => Line(start, end, thickness, startColor, endColor, endCaps, LineGeometry.Billboard, zTest);
 		public static void Line(Vector3 start, Vector3 end, float thickness, Color32 startColor, Color32 endColor, LineEndCap endCaps, LineGeometry geometry, bool zTest) {
@@ -165,6 +206,31 @@ namespace Sperlich.Debug.Draw {
 			});
 		}
 
+		public static void Sphere(Vector3 pos, bool zTest = false) => Sphere(pos, 1f, zTest);
+		public static void Sphere(Vector3 pos, float radius, bool zTest = false) => Sphere(pos, radius, Color.white, zTest);
+		public static void Sphere(Vector3 pos, float radius, Color32 color, bool zTest = false) {
+			Spheres.Enqueue(new DrawSphere() {
+				pos = pos,
+				radius = radius,
+				color = color,
+				zTest = zTest
+			});
+		}
+
+		public static void Cube(Vector3 pos, bool zTest = false) => Cube(pos, Vector3.one, zTest);
+		public static void Cube(Vector3 pos, Vector3 size, bool zTest = false) => Cube(pos, Color.white, size, zTest);
+		public static void Cube(Vector3 pos, Color32 color, bool zTest = false) => Cube(pos, color, Vector3.one, zTest);
+		public static void Cube(Vector3 pos, Color32 color, Vector3 size, bool zTest = false) => Cube(pos, Vector3.right, size, color, zTest);
+		public static void Cube(Vector3 pos, Vector3 normal, Vector3 size, Color32 color, bool zTest = false) {
+			Cubes.Enqueue(new DrawCube() {
+				pos = pos,
+				normal = normal,
+				size = size,
+				color = color,
+				zTest = zTest
+			});
+		}
+
 		public static void SetZTest(bool state) {
 			if(state) {
 				Shapes.Draw.ZTest = UnityEngine.Rendering.CompareFunction.LessEqual;
@@ -226,6 +292,19 @@ namespace Sperlich.Debug.Draw {
 			public Color32 color;
 			public float fontSize;
 			public string text;
+			public bool zTest;
+		}
+		struct DrawSphere {
+			public Vector3 pos;
+			public Color32 color;
+			public float radius;
+			public bool zTest;
+		}
+		struct DrawCube {
+			public Vector3 pos;
+			public Vector3 normal;
+			public Color32 color;
+			public Vector3 size;
 			public bool zTest;
 		}
 	}
