@@ -4,8 +4,8 @@
 This is a wrapper script for the Unity-Package [Shapes](https://acegikmo.com/shapes/)
 
 The intention was to create a simple to use API to easily draw Gizmos in Scene and Editor.
-Shapes on it's is a great asset made by Freya Holmer, but setting up Shapes in immediate mode is a bit time consuming and makes code unreadibly very quick.
-Also drawing in immediate mode isn't fully supported.
+Shapes on it's is a great asset made by Freya Holmer, but setting up Shapes in immediate mode is a bit time consuming and makes code unreadible very quick.
+Also drawing immediate mode in Update isn't fully supported.
 
 ### Features:
 - API looks almost like Gizmos.Draw
