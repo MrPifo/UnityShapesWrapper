@@ -24,7 +24,8 @@ Then you can call ``Draw.Line()`` for example and fill in the required parameter
 - Disc
 - Ring
 - Text
-
+- Cube
+- Sphere
 
 
 ### Notice
