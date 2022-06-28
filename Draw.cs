@@ -60,7 +60,7 @@ namespace Sperlich.Debug.Draw {
 						Lines.RemoveAt(i);
 						i--;
 					} else {
-						Lines.Add(new DrawLine() {
+						Lines[i] = new DrawLine() {
 							start = l.start,
 							end = l.end,
 							thickness = l.thickness,
@@ -70,7 +70,7 @@ namespace Sperlich.Debug.Draw {
 							geometry = l.geometry,
 							time = l.time - Time.deltaTime,
 							zTest = l.zTest,
-						});
+						};
 					}
 				}
 			}
@@ -96,7 +96,7 @@ namespace Sperlich.Debug.Draw {
 						Discs.RemoveAt(i);
 						i--;
 					} else {
-						Discs.Add(new DrawDisc() {
+						Discs[i] = new DrawDisc() {
 							pos = d.pos,
 							normal = d.normal,
 							radius = d.radius,
@@ -106,7 +106,7 @@ namespace Sperlich.Debug.Draw {
 							softFill = d.softFill,
 							startColor = d.startColor,
 							zTest = d.zTest
-						});
+						};
 					}
 				}
 			}
@@ -133,7 +133,7 @@ namespace Sperlich.Debug.Draw {
 						Rings.RemoveAt(i);
 						i--;
 					} else {
-						Rings.Add(new DrawRing() {
+						Rings[i] = new DrawRing() {
 							pos = r.pos,
 							normal = r.normal,
 							radius = r.radius,
@@ -144,7 +144,7 @@ namespace Sperlich.Debug.Draw {
 							softFill = r.softFill,
 							time = r.time - Time.deltaTime,
 							zTest = r.zTest
-						});
+						};
 					}
 				}
 			}
