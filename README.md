@@ -3,18 +3,18 @@
 
 This is a wrapper script for the Unity-Package [Shapes](https://acegikmo.com/shapes/)
 
-The intention was to create a simple to use API to easily draw Gizmos in Scene and Editor.
-Shapes on it's is a great asset made by Freya Holmer, but setting up Shapes in immediate mode is a bit time consuming and makes code unreadible very quick.
-Also drawing immediate mode in Update isn't fully supported.
+The intention was to create an easy API to easily draw Gizmos in Scene and Editor.
+Shapes on it's own is a great asset made by Freya Holmer, but setting up Shapes in immediate mode is time consuming and makes code unreadable.
+Also drawing immediate Shapes in Update isn't fully supported.
 
 ### Features:
-- API looks almost like Gizmos.Draw
-- Can be used in Update, LateUpdate, FixedUpdate. To make sure Shapes are visible, they should at minimum run in frame update rate.
-- No instantiating of Shapes
+- API looks similiar to Gizmos.Draw
+- Can be used in Update, LateUpdate, FixedUpdate. Although FixedUpdate may be problematic if it is running below your framerate. You can additionaly use the time parameter to display it longer.
+- Display Shapes over a timespan.
 
 ### How it works:
-As soon as you import this script, every scene you open or start will generate a GameObject which holds the script automaticially.
-If you don't want to behave it like this delete the ``ScriptReload`` method.
+As soon you start the application, the script will auto-generate a GameObject which holds the script and marks it as DontDestroyOnLoad. This script is required and the Shapes won't render if it isn't present.
+You can disable Drawing by using the DisableDrawing Property.
 
 Then you can call ``Draw.Line()`` for example and fill in the required parameters.
 
@@ -26,9 +26,11 @@ Then you can call ``Draw.Line()`` for example and fill in the required parameter
 - Text
 - Cube
 - Sphere
+- Rectangles
 
 
 ### Notice
-I wrote this wrapper mostly for my own, so you may suggest, ask or even extend this script on your own. Also feel free to report Bugs or whatever else.
+I wrote this wrapper mostly for my own, so you may suggest, ask or even extend this script on your own. Also feel free to report any Bugs or improvements.
+Drawing Shapes in Editor may be unstable on certain pipelines.
 
 I also may extend this script in the future and change some things.
