@@ -1,36 +1,39 @@
-# Wrapper for Unity Shapes
-**[Shapes](https://assetstore.unity.com/packages/tools/particles-effects/shapes-173167) is required for this script**
+# **Wrapper for Unity Shapes**  
+**[Shapes](https://assetstore.unity.com/packages/tools/particles-effects/shapes-173167) is required for this script**  
 
-This is a wrapper script for the Unity-Package [Shapes](https://acegikmo.com/shapes/)
+This is a lightweight wrapper for the Unity package [Shapes](https://acegikmo.com/shapes/), designed to simplify and streamline drawing operations in both the **Scene** and **Editor**.  
 
-The intention was to create an easy API to easily draw Gizmos in Scene and Editor.
-Shapes on it's own is a great asset made by Freya Holmer, but setting up Shapes in immediate mode is time consuming and makes code unreadable.
-Also drawing immediate Shapes in Update isn't fully supported.
+**Shapes**, created by Freya Holmer, is an incredible asset, but using it in **immediate mode** can be time-consuming and clutter your code. Additionally, rendering immediate-mode Shapes in `Update()` isn’t fully supported. This wrapper provides an easy-to-use API to make drawing Gizmos effortless.  
 
-### Features:
-- API looks similiar to Gizmos.Draw
-- Can be used in Update, LateUpdate, FixedUpdate. Although FixedUpdate may be problematic if it is running below your framerate. You can additionaly use the time parameter to display it longer.
-- Display Shapes over a timespan.
+## ✨ **Features**  
+- **Gizmos-Like API** – Designed to feel familiar, similar to `Gizmos.Draw`.  
+- **Frame-Independent Rendering** – Works in `Update()`, `LateUpdate()`, and `FixedUpdate()`.  
+- **Time-Based Display** – Render Shapes for a specified duration.  
+- **Works in Both Runtime and Editor** – Easily draw debug visuals in any mode.  
 
-### How it works:
-As soon you start the application, the script will auto-generate a GameObject which holds the script and marks it as DontDestroyOnLoad. This script is required and the Shapes won't render if it isn't present.
-You can disable Drawing by using the DisableDrawing Property.
+## 🔍 **How It Works**  
+Simply call `Draw.Line()`, `Draw.Sphere()`, or any other provided method and pass the required parameters.  
 
-Then you can call ``Draw.Line()`` for example and fill in the required parameters.
+## **Implemented Shapes**  
+- **Line**  
+- **Ray**  
+- **Disc**  
+- **Ring**  
+- **Cone**  
+- **Text**  
+- **Cube**  
+- **Sphere**  
+- **Square**  
+- **Box**  
+- **Rectangle**  
+- **Triangle**  
+- **FlatTriangle**  
 
-### Implemented Shapes
-- Line
-- Ray
-- Disc
-- Ring
-- Text
-- Cube
-- Sphere
-- Rectangles
+## ⚠ **Important Notes**  
+- This wrapper was originally created for personal use, but feel free to **suggest features, report bugs, or modify it as you like**.  
+- **Editor mode rendering may be unstable in certain rendering pipelines.**  
+- Future updates may introduce improvements and changes.  
 
+---
 
-### Notice
-I wrote this wrapper mostly for my own, so you may suggest, ask or even extend this script on your own. Also feel free to report any Bugs or improvements.
-Drawing Shapes in Editor may be unstable on certain pipelines.
-
-I also may extend this script in the future and change some things.
+This keeps everything clean, structured, and professional while still maintaining an approachable tone. Let me know if you need further refinements! 🚀  
