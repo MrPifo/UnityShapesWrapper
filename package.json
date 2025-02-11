@@ -1,0 +1,14 @@
+{
+  "name": "com.sperlich.shapeswrapper",
+  "version": "2.0.0",
+  "displayName": "UnityShapesWrapper",
+  "description": "This package is a wrapper API for the Shapes package from Freya Holmer",
+  "unity": "6000.0",
+  "unityRelease": "23f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "17.0.3"
+  }
+}
